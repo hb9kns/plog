@@ -1,5 +1,7 @@
 # plog
 
+_Please note: documentation is work in progress, be patient for now!_
+
 Plog is a suite of some scripts to be run on a UNIX server for handling
 Markdown formatted blogs, glogs, and email newsletters with Git.
 
@@ -7,8 +9,10 @@ An example of the generated output can be found at my personal
 [blog]( http://yargo.andropov.org/blog ) and
 [glog]( gopher://sdf.org/1/users/yargo ) sites.
 
-Please note that most browsers are unfortunately incapable of displaying
-[Gopher]( http://gopherproject.org ) links.
+Please note that _most browsers_ are unfortunately _incapable_ of displaying
+[Gopher]( http://gopherproject.org ) links!
+(If you are using Seamonkey or Firefox, you may try the "OverbiteFF" add-on
+for Gopher functionality.)
 
 There is a fine
 [Public Gopher Proxy]( http://gopher.floodgap.com/gopher/ )
