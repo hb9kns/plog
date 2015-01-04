@@ -9,6 +9,7 @@ pubhtml="$HOME/plog/pubhtml"
 lenhtml=12
 indhtml='list.html'
 rsshtml='rss.xml'
+rsslink='http://www.example.com/blog'
 
 while sh $mydir/pubnext.sh . $prefix $adds $pubhtml $pubtext
 do :
@@ -19,6 +20,8 @@ cd $pubhtml
 cat <<EOH >$indhtml
 <html><head>
 <title>most recent entries in inverse chronological order</title>
+ <link rel="alternate" type="application/rss+xml"
+  href="$rsslink/$rsshtml" title="RSS feed">
 </head>
 <body><dl>
 EOH
@@ -27,7 +30,7 @@ cat <<EOH >$rsshtml
 <?xml version="1.0"?><rss version="2.0">
 <channel><title>blog title</title>
 <description>blog description</description>
-<link>http://www.example.org/blog</link>
+<link>$rsslink</link>
 EOH
 
 ls -1t $prefix* | head -n $lenhtml | { while read hname
@@ -50,7 +53,7 @@ EOI
 
  cat <<EOI >>$rsshtml
   [...] </description>
-  <link>$hname</link>
+  <link>$rsslink/$hname</link>
  </item>
 EOI
 
