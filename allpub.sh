@@ -2,6 +2,8 @@
 # script to process all files in current directory with pubnext.sh
 # (2015 YCB)
 mydir=`dirname $0`
+# working directory, use current if empty:
+wdir="${1:-.}"
 # pattern to look for files that may be processed:
 prefix='t'
 # list of e-mail addresses:
@@ -23,8 +25,8 @@ rsshtml='rss.xml'
 # base name of HTML/blog directory (from outside):
 rsslink='http://www.example.com/blog'
 
-# process all possible files in the current directory
-while sh $mydir/pubnext.sh . $prefix $adds $pubhtml $pubtext
+# process all possible files in the working directory
+while sh $mydir/pubnext.sh "$wdir" $prefix $adds $pubhtml $pubtext
 do : # colon is a shell NO-OP
 done
 
