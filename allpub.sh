@@ -30,8 +30,11 @@ while sh $mydir/pubnext.sh "$wdir" $prefix $adds $pubhtml $pubtext
 do : # colon is a shell NO-OP
 done
 
+# all directories are relative to wdir (or absolute)
+cd "$wdir"
+
 # now create HTML/blog index
-cd $pubhtml
+cd "$pubhtml"
 
 # index header
 cat <<EOH >$indhtml
@@ -97,7 +100,7 @@ chmod a+r $indhtml $rsshtml
 cd -
 
 # create text (Gopher) index
-cd $pubtext
+cd "$pubtext"
 
 # index header
 cat <<EOH >$indtext
