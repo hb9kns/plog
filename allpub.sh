@@ -110,10 +110,10 @@ EOH
 # list all possible file names in chronological order, take first $lentext ones
 ls -1t $prefix* | head -n $lentext | { while read tname
 do
- # take up to 50 chars from first line as excerpt
- fline=`head -n 1 $tname | sed -e 's/^ *//;s/\(.\{50\}\).*/\1.../'`
- # create index entry
- echo "0$fline	./$tname" >>$indtext
+ # take up to 42 chars from first line as excerpt
+ fline=`head -n 1 $tname | sed -e 's/^ *//;s/\(.\{42\}\).*/\1.../'`
+ # create gopher index entry with word count (note: <TAB> before ./$tname)
+ echo "0$fline [`cat $tname|wc -w` words]	./$tname" >>$indtext
 done
 }
 
