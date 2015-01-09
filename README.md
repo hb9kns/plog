@@ -91,9 +91,15 @@ of `pubnext.sh`:
   resulting from Markdown-HTML conversion
 - `htmlfoot` is the analogue for the ending of these files
 
-Please note that arguments for `tpref`, `adds`, `webdir`,
-and `gopherdir` may be given to `pubnext.sh` when it is
-called, overriding the settings in the script.
+*Please note:*
+
+- arguments for `tpref`, `adds`, `webdir`,
+  `gopherdir` may be given to `pubnext.sh`,
+  overriding the settings in the script
+- all directories are *relative to the
+  working directory* given as first (and
+  mandatory) argument
+
 
 #### `allpub.sh`
 
@@ -123,4 +129,4 @@ of `allpub.sh`:
 
 ---
 
-_2015-1-7,YCB_
+_2015-1-9 YCB_
