@@ -1,5 +1,5 @@
 #!/bin/sh
-# sync script (2015 YCB)
+# sync script (2015 YB)
 # rem... are directories, where pubnext.sh or allpub.sh have created files
 rem=/home/otheruser/plog
 remhtml=$rem/pubhtml

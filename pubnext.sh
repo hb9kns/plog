@@ -1,10 +1,27 @@
 #!/bin/sh
 # script to generate HTML and text (Gopher) file from Markdown formatted text
 # and to send e-mails containing both to a list of recipients
-# (2015 YCB)
+#
+# Copyright 2015 Yargo Bonetti
+#
+# This file is part of plog.
+# 
+# plog is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# Foobar is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with plog.  If not, see <http://www.gnu.org/licenses/>.
+#
 myself=`basename "$0"`
 mydir=`dirname "$0"`
-ver='1.1'
+ver='1.2'
 subpref='[newsletter]' # prefix for mail subject
 tpref='t' # prefix for text file names
 adds='ad.txt' # address list for recipients
@@ -30,6 +47,12 @@ donefile='' # name of sent file
 if test "$1" = ""
 then cat <<EOH >&2
 
+    This is $myself, Version $ver
+    Copyright (C) 2015 Yargo Bonetti
+    This program comes with ABSOLUTELY NO WARRANTY.
+    This is free software, and you are welcome to redistribute it
+    under certain conditions. See COPYING.txt for further information.
+
 usage: $myself <dir> [<prefix> <addressfile> <webdir> <gopherdir>]
  will change to directory <dir>, and send first <text> with <prefix> to all
  addresses in <addressfile>,
@@ -51,7 +74,6 @@ usage: $myself <dir> [<prefix> <addressfile> <webdir> <gopherdir>]
 
  return value 0 if <text> found and processed, >0 otherwise
  (logging into $logfile, lockfile $lockf)
- (version $ver, 2015 YCB)
 
 EOH
 exit 1

@@ -1,6 +1,23 @@
 #!/bin/sh
 # script to process all files in current directory with pubnext.sh
-# (2015 YCB)
+#
+# Copyright 2015 Yargo Bonetti
+#
+# This file is part of plog.
+# 
+# plog is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# Foobar is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with plog.  If not, see <http://www.gnu.org/licenses/>.
+#
 mydir=`dirname $0`
 # working directory, use current if empty:
 wdir="${1:-.}"
