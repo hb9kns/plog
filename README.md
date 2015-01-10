@@ -1,5 +1,8 @@
 # plog
 
+*Please note: There is still missing a nice example of a working setup!*
+*It will be added soon, to help in understanding the system.*
+
 ## Overview
 
 Plog is a suite of some scripts to be run on a UNIX server for handling
