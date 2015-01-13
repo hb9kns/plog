@@ -21,8 +21,12 @@
 mydir=`dirname $0`
 # working directory, use current if empty:
 wdir="${1:-.}"
+# configuration file
+cfgf="$mydir/.plog.rc"
+
+### following values might be overridden by contents of $cfgf
 # pattern to look for files that may be processed:
-prefix='t'
+fprefix='t'
 # list of e-mail addresses:
 adds='ad.txt'
 # directory to save text files for publication:
@@ -40,10 +44,15 @@ indhtml='list.html'
 # name of RSS file (to be saved in $pubhtml):
 rsshtml='rss.xml'
 # base name of HTML/blog directory (from outside):
-rsslink='http://www.example.com/blog'
+baselink='http://www.example.com/blog'
+
+# source config file, if readable
+if test -r "$cfgf"
+then . "$cfgf"
+fi
 
 # process all possible files in the working directory
-while sh $mydir/pubnext.sh "$wdir" $prefix $adds $pubhtml $pubtext
+while sh $mydir/pubnext.sh "$wdir" $fprefix $adds $pubhtml $pubtext
 do : # colon is a shell NO-OP
 done
 
@@ -58,7 +67,7 @@ cat <<EOH >$indhtml
 <html><head>
 <title>most recent entries in inverse chronological order</title>
  <link rel="alternate" type="application/rss+xml"
-  href="$rsslink/$rsshtml" title="RSS feed">
+  href="$baselink/$rsshtml" title="RSS feed">
 </head>
 <body><dl>
 EOH
@@ -68,11 +77,11 @@ cat <<EOH >$rsshtml
 <?xml version="1.0"?><rss version="2.0">
 <channel><title>blog title</title>
 <description>blog description</description>
-<link>$rsslink</link>
+<link>$baselink</link>
 EOH
 
 # list all possible file names in chronological order, take first $lenhtml ones
-ls -1t $prefix* | head -n $lenhtml | { while read hname
+ls -1t $fprefix* | head -n $lenhtml | { while read hname
 do
  # look for first <h1> tag and take its contents as title:
  htit=`grep '<h1' $hname | head -n 1 | sed -e 's/<h1>//;s/<.h1>//;'`
@@ -94,7 +103,7 @@ EOI
  # end RSS entry
  cat <<EOI >>$rsshtml
   [...] </description>
-  <link>$rsslink/$hname</link>
+  <link>$baselink/$hname</link>
  </item>
 EOI
 
@@ -125,7 +134,7 @@ most recent entries in inverse chronological order
 EOH
 
 # list all possible file names in chronological order, take first $lentext ones
-ls -1t $prefix* | head -n $lentext | { while read tname
+ls -1t $fprefix* | head -n $lentext | { while read tname
 do
  # take up to 50 chars from first line as excerpt
  fline=`head -n 1 $tname | sed -e 's/^ *//;s/\(.\{50\}\).*/\1.../'`
