@@ -21,7 +21,7 @@
 #
 myself=`basename "$0"`
 mydir=`dirname "$0"`
-ver='2.0'
+ver='2.1'
 cfgf="$mydir/.plog.rc" # config file
 
 ### following values might be overridden by $cfgf

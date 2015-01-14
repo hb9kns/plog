@@ -1,10 +1,10 @@
 # plog
 
-**DO NOT USE THE CURRENT VERSION, BUT ONLY COMMIT 92d064f!**
+*Please note: there is now one common configuration file .plog.rc.*
+*It is not part of the suite, but a template file progrc.template is*
+*included, which should be copied to .plog.rc during setup.*
 
-Current version is broken due to ongoing simplification works.
-
-*Please note: There is still missing a nice example of a working setup!*
+*ToDo: There is still missing a nice example of a working setup!*
 *It will be added soon, to help in understanding the system.*
 
 ## Overview
@@ -16,7 +16,7 @@ An example of the generated output can be found at my personal
 [blog]( http://yargo.andropov.org/blog/list.html ) and
 [glog]( gopher://sdf.org/1/users/yargo ) sites.
 
-This is describing version 2.0 of the suite.
+This is describing version 2.1 of the suite.
 
 ### Notes about the Gopher protocol
 
@@ -59,26 +59,22 @@ in the same directory.
 
 ### Customisation of scripts with `.plog.rc`
 
-The two shell scripts have some variables set at the
-beginning, which should be configured to your needs.
+The two shell scripts have some variables set at the beginning, which
+should be configured to your needs.
 
-They can be used for processing several collections of
-postings through the run-time argument of the working
-directory (see below). In case you need very different
-configuration, you can simply copy the scripts and use
-different instances for different collections.
+They can be used for processing several collections of postings through
+the run-time argument of the working directory (see below). In case you
+need very different configuration, you can simply copy the scripts and
+use different instances for different collections.
 
-The scripts share a common configuration file, named
-`.plog.rc`, which has to be in the same directory as
-the scripts themselves. It is basically an additional
-shell script which is executed at the beginning of
-each of the other scripts, but after setting of the
-variables. This way, values set in the configuration
-file will override the defaults hardcoded in scripts.
+The scripts share a common configuration file `.plog.rc`, which has to
+be in the same directory as the scripts themselves. It is basically an
+additional shell script which is executed at the beginning of each of the
+other scripts, but after setting of the variables. This way, values set
+in the configuration file will override the defaults hardcoded in scripts.
 
-In the plog suite, there is a `plogrc.template` file,
-which can be copied into `.plog.rc`, and modified
-according to your needs.
+In the plog suite, there is a `plogrc.template` file, which can be copied
+into `.plog.rc`, and modified according to your needs.
 
 Here is a copy of the current template file, followed
 by a detailed description of all used variables.
@@ -149,8 +145,7 @@ by a detailed description of all used variables.
 	# lockfile
 	lockf='.pubnext.lock'
 
-- `adds` is a string with the name of the address file of
-  the e-mail recipients
+- `adds` is a string with the name of the address file of the e-mail recipients
 - `pubtext` is a directory, where pure text versions and (by `allpub.sh`)
   an index file suitable for a gopher server will be saved
 - `lentext` is the maximum number of text version posts that will be indexed
@@ -273,13 +268,13 @@ files (together with their respective index files) as the same user who
 launched the plog scripts, a copying step for the final publication may
 be necessary.
 
-A possible solution is given in the script `plogsync.sh`. It simply uses
+A possible solution is given in the script `allsync.sh`. It simply uses
 `rsync` to pull the files from a "remote" directory (which of course may
 be on the same machine) to a "local" directory, and make all of them world
 readable. Also a simple `cp` could of course be used, but `rsync` only
 copies files which are not yet present in the target ("local") directory.
 
-If you want to make use of `plogsync.sh`, please set its variables
+If you want to make use of `allsync.sh`, please set its variables
 according to your working and publication directories! You should
 understand how `rsync` is working before doing so, though.
 

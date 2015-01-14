@@ -19,6 +19,8 @@
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
 mydir=`dirname $0`
+myself=`basename $0`
+ver='2.1'
 # working directory, use current if empty:
 wdir="${1:-.}"
 # configuration file
@@ -122,7 +124,7 @@ done
 cat <<EOF >>$indhtml
 </dl>
 <p><small>
-updated: `date -u`
+updated `date -u` :: by $myself v$ver
 </small></p></body></html>
 EOF
 
@@ -150,6 +152,8 @@ do
  echo "0$fline [$wcnt words]	./$tname" >>$indtext
 done
 }
+
+echo "updated `date -u` :: by $myself v$ver" >>$indtext
 
 # make index world readable, and return to previous directory (cosmetics..)
 chmod a+r $indtext
