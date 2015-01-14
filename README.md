@@ -104,10 +104,12 @@ by a detailed description of all used variables.
 	lenhtml=12
 	# name of index file for HTML/blog
 	indhtml='list.html'
+	# title in index file for HTML/blog
+	indhtmltitle='blog title'
 	# name of RSS file (to be saved in $pubhtml):
 	rsshtml='rss.xml'
 	# title in RSS file
-	rsstitle='blog title'
+	rsstitle='blog feed'
 	# description in RSS file
 	rssdesc='blog description'
 	

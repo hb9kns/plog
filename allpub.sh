@@ -43,10 +43,12 @@ pubhtml="$HOME/plog/pubhtml"
 lenhtml=12
 # name of index file for HTML/blog:
 indhtml='list.html'
+# title in index file for HTML/blog
+indhtmltitle='blog title'
 # name of RSS file (to be saved in $pubhtml):
 rsshtml='rss.xml'
 # title of RSS file
-rsstitle='blog title'
+rsstitle='blog feed'
 # description of RSS file
 rssdesc='blog description'
 # base name of HTML/blog directory (from outside):
