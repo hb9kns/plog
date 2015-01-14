@@ -104,7 +104,7 @@ abort () { # end script and remove lockfile, if return code higher than 9
 # go to dir of this script, get absolute path, and return to where we've been
 cd "$mydir"
 mydir=`pwd -P`
-cd -
+cd - >/dev/null
 
 dir="$1" # working directory
 # if it's not a directory where we can execute and write and read
@@ -147,7 +147,7 @@ fi
 git pull >/dev/null 2>&1
 
 # process all files with names beginning with $fprefix
-ls -1 $fprefix* | { while read fn
+ls -1 $fprefix* 2>/dev/null | { while read fn
 do
  if ! grep "^$draft" "$fn" >/dev/null 2>&1
  then # if no draft flag found in text

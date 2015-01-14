@@ -35,6 +35,8 @@ pubtext="$HOME/plog/pubtext"
 lentext=24
 # name of index file for text:
 indtext='gophermap'
+# header line in index file
+indtexthead='most recent entries in reverse chronological order'
 # directory to save HTML/blog files for publication:
 pubhtml="$HOME/plog/pubhtml"
 # number of HTML files to be included in the index:
@@ -43,6 +45,10 @@ lenhtml=12
 indhtml='list.html'
 # name of RSS file (to be saved in $pubhtml):
 rsshtml='rss.xml'
+# title of RSS file
+rsstitle='blog title'
+# description of RSS file
+rssdesc='blog description'
 # base name of HTML/blog directory (from outside):
 baselink='http://www.example.com/blog'
 
@@ -65,7 +71,7 @@ cd "$pubhtml"
 # index header
 cat <<EOH >$indhtml
 <html><head>
-<title>most recent entries in inverse chronological order</title>
+<title>$indhtmltitle</title>
  <link rel="alternate" type="application/rss+xml"
   href="$baselink/$rsshtml" title="RSS feed">
 </head>
@@ -75,8 +81,8 @@ EOH
 # RSS header
 cat <<EOH >$rsshtml
 <?xml version="1.0"?><rss version="2.0">
-<channel><title>blog title</title>
-<description>blog description</description>
+<channel><title>$rsstitle</title>
+<description>$rssdesc</description>
 <link>$baselink</link>
 EOH
 
@@ -114,7 +120,7 @@ done
 cat <<EOF >>$indhtml
 </dl>
 <p><small>
-last updated: `date -u`
+updated: `date -u`
 </small></p></body></html>
 EOF
 
@@ -123,15 +129,13 @@ echo '</channel></rss>' >>$rsshtml
 
 # make index and RSS world readable, and return to previous directory
 chmod a+r $indhtml $rsshtml
-cd -
+cd - >/dev/null
 
 # create text (Gopher) index
 cd "$pubtext"
 
 # index header
-cat <<EOH >$indtext
-most recent entries in inverse chronological order
-EOH
+echo "$indtexthead" >$indtext
 
 # list all possible file names in chronological order, take first $lentext ones
 ls -1t $fprefix* | head -n $lentext | { while read tname
@@ -147,4 +151,4 @@ done
 
 # make index world readable, and return to previous directory (cosmetics..)
 chmod a+r $indtext
-cd -
+cd - >/dev/null
