@@ -22,7 +22,8 @@
 myself=`basename "$0"`
 mydir=`dirname "$0"`
 ver='2.1'
-cfgf="$mydir/.plog.rc" # config file
+wdir="${1:-.}" # working directory, current if empty
+cfgf="$wdir/.plog.rc" # config file
 
 ### following values might be overridden by $cfgf
 subject='[newsletter]' # prefix for mail subject
@@ -70,12 +71,9 @@ usage: $myself <dir> [<prefix> <addressfile> <pubhtml> <pubtext>]
  (with .html/.txt suffixes, respectively, ignoring nonexistent directories),
  and do "git mv <text> $arch" afterwards (or just "mv", unless .git present)
 
- only texts not containing "$draft" at beginning of lines will be considered
+ configuration is taken from <dir>/.plog.rc
 
- defaults: prefix=$fprefix
-  addressfile=$adds
-  pubhtml=$pubhtml
-  pubtext=$pubtext
+ only texts not containing "$draft" at beginning of lines will be considered
 
  addressfile contains one address per line, lines with leading # are ignored
 
@@ -106,13 +104,12 @@ cd "$mydir"
 mydir=`pwd -P`
 cd - >/dev/null
 
-dir="$1" # working directory
 # if it's not a directory where we can execute and write and read
-if test ! -x "$dir" -o ! -w "$dir" -o ! -r "$dir" -o ! -d "$dir"
-then abort 5 "$dir is not a fully accessible directory"
+if test ! -x "$wdir" -o ! -w "$wdir" -o ! -r "$wdir" -o ! -d "$wdir"
+then abort 5 "$wdir is not a fully accessible directory"
 fi
 
-cd "$dir"
+cd "$wdir"
 
 # just fail if there is a lock file
 # very dumb logic, could be improved with timeout and retry
@@ -125,7 +122,7 @@ echo "lockfile for $myself with PID $$" >$lockf
 echo "at $now" >>$lockf
 echo >$tmpf1 # create empty file
 
-logit starting at $now in $dir
+logit starting at $now in `pwd -P`
 
 fprefix=${2:-$fprefix}
 logit looking for files with prefix $fprefix
@@ -208,7 +205,7 @@ else
   # add modified logfile to commit
   git add $logfile
   # commit and push archived text file
-  git commit -m ": $myself processing $dir/$donefile" >/dev/null 2>&1 && logit git commit done
+  git commit -m ": $myself processing $wdir/$donefile" >/dev/null 2>&1 && logit git commit done
   sleep 5 # wait a bit, to let file system finish its work after git
   git push >/dev/null 2>&1 && logit git push done
  else # simply use mv for archiving

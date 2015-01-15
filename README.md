@@ -68,7 +68,7 @@ need very different configuration, you can simply copy the scripts and
 use different instances for different collections.
 
 The scripts share a common configuration file `.plog.rc`, which has to
-be in the same directory as the scripts themselves. It is basically an
+be in the *working* directory. It is basically an
 additional shell script which is executed at the beginning of each of the
 other scripts, but after setting of the variables. This way, values set
 in the configuration file will override the defaults hardcoded in scripts.

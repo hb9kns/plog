@@ -24,7 +24,7 @@ ver='2.1'
 # working directory, use current if empty:
 wdir="${1:-.}"
 # configuration file
-cfgf="$mydir/.plog.rc"
+cfgf="$wdir/.plog.rc"
 
 ### following values might be overridden by contents of $cfgf
 # pattern to look for files that may be processed:

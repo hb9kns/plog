@@ -5,7 +5,7 @@
 adds='ad.txt'
 
 # directory to save text files for publication
-pubtext="$HOME/plog/pubtext"
+pubtext=''
 # number of text files to be included in the index
 lentext=24
 # name of index file for text
@@ -14,7 +14,7 @@ indtext='gophermap'
 indtexthead='most recent entries in reverse chronological order'
 
 # directory to save HTML files for publication
-pubhtml="$HOME/plog/pubhtml"
+pubhtml=''
 # number of HTML files to be included in the index
 lenhtml=12
 # name of index file for HTML/blog
