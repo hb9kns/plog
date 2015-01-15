@@ -86,7 +86,7 @@ by a detailed description of all used variables.
 	adds='ad.txt'
 	
 	# directory to save text files for publication
-	pubtext="$HOME/plog/pubtext"
+	pubtext=''
 	# number of text files to be included in the index
 	lentext=24
 	# name of index file for text
@@ -95,7 +95,7 @@ by a detailed description of all used variables.
 	indtexthead='most recent entries in reverse chronological order'
 	
 	# directory to save HTML files for publication
-	pubhtml="$HOME/plog/pubhtml"
+	pubhtml=''
 	# number of HTML files to be included in the index
 	lenhtml=12
 	# name of index file for HTML/blog
@@ -147,7 +147,10 @@ by a detailed description of all used variables.
 
 - `adds` is a string with the name of the address file of the e-mail recipients
 - `pubtext` is a directory, where pure text versions and (by `allpub.sh`)
-  an index file suitable for a gopher server will be saved
+  an index file suitable for a gopher server will be saved; if empty, no
+  saving will happen (but `allpub.sh` will report errors, so you should
+  set up dummy directories `pubtext` and `pubhtml` if you want to make use
+  of `allpub.sh` just for sending e-mail newsletters)
 - `lentext` is the maximum number of text version posts that will be indexed
 - `indtext` is the name of the index file for pure text version; if you are
   planning to use it as gopher index, it probably should be called `gophermap`
@@ -185,6 +188,12 @@ by a detailed description of all used variables.
 
 - arguments for `fprefix`, `adds`, `pubhtml`, `pubtext` can be given to
   `pubnext.sh` on the command line, overriding the settings in the script
+  or the configuration file `.plog.rc`
+- `.plog.rc` is local to any *working* directory, so you have to add it
+  to any directory containing posts (source texts)
+- `.plog.rc` is read as a *shell script,* therefore you have to honour
+  shell script syntax; be especially careful about closing all strings
+  opened with `'` and to escape `"` with `\` inside `"..."` strings!
 - a single argument can be given to `allpub.sh`, indicating the working
   directory where the source (Markdown formatted) files are stored; it will
   be passed on to `pubnext.sh`, and if empty, the current directory is used
@@ -200,13 +209,16 @@ by a detailed description of all used variables.
 In any case, you need a directory (the "working directory"), where the
 source texts (Markdown formatted) are stored. Typically, this would be
 inside of a directory which is version controlled by Git, but plog should
-still work without that. In this directory, all its subdirectories, and
+still work without that. In this directory, as well as its subdirectories, and
 additional directories needed for publication, the plog scripts (either
 launched manually by you or by some automatic process like a cron job)
 in principal need complete access permission (read, write, and execute).
 
 As a subdirectory, you should set up the archive directory, and you have
 to accordingly set the variable `arch` in `pubnext.sh`.
+
+In the working directory, you have to set up the configuration script
+`.plog.rc`; you can use `plogrc.template` as a starting point.
 
 #### File names for "posts", or source texts
 
@@ -280,7 +292,7 @@ understand how `rsync` is working before doing so, though.
 
 ---
 
-_2015-Jan-10 YB_
+_2015-Jan-15 YB_
 
     # Copyright 2015 Yargo Bonetti
     #
