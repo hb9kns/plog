@@ -18,11 +18,16 @@
 # You should have received a copy of the GNU General Public License
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
-mydir=`dirname $0`
-myself=`basename $0`
+myself=`basename "$0"`
 ver='2.1'
-# working directory, use current if empty:
-wdir="${1:-.}"
+wdir="${1:-.}" # working directory, current if empty
+
+# go to dir of this script, get absolute path, and return to where we've been
+mydir=`dirname "$0"`
+cd "$mydir"
+mydir=`pwd -P`
+cd - >/dev/null
+
 # configuration file
 cfgf="$wdir/.plog.rc"
 
