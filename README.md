@@ -42,6 +42,8 @@ via gopherproject.org or Floodgap.
 
 The plog suite mainly consists of the (sh/bash) shell scripts `pubnext.sh`
 and `allpub.sh`, a configuration file, and a suitable directory structure.
+If you make use of character conversion (UTF8 or the like), also the
+script `convchars.sh` will be needed.
 
 It makes use of the standard command line tools like `grep` and `sed`
 available on almost all Unix systems.
@@ -54,8 +56,8 @@ suite), and `lynx` for HTML-text conversion.
 however, in case of failure, the scripts should gracefully switch to a
 simple `mv`.
 
-The main scripts `pubnext.sh, mrkdwn.pl, allpub.sh` should be installed
-in the same directory.
+The main scripts `pubnext.sh, mrkdwn.pl, allpub.sh, convchars.sh`
+should be installed in the same directory.
 
 ### Customisation of scripts with `.plog.rc`
 
@@ -129,6 +131,8 @@ by a detailed description of all used variables.
 	
 	logfile='_pubnext.log'
 	
+	# special character converter
+	convert0='cat'
 	# markdown to HTML converter
 	convert1='mrkdwn.pl'
 	# HTML to text converter
@@ -178,6 +182,7 @@ by a detailed description of all used variables.
   resulting from Markdown-HTML conversion
 - `htmlfoot` is the analogue for the ending of these files
 - `logfile` is the file logging all activity by `pubnext.sh`
+- `convert0` is the script for UTF8-HTML character conversion
 - `convert1` is the script for Markdown-HTML conversion
 - `convert2` is the script for HTML-text conversion
 - `mailer` is the program for transmitting e-mail
@@ -292,7 +297,7 @@ understand how `rsync` is working before doing so, though.
 
 ---
 
-_2015-Jan-15 YB_
+_2015-Jan-16 YB_
 
     # Copyright 2015 Yargo Bonetti
     #
