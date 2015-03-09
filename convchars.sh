@@ -1,6 +1,7 @@
 #!/bin/sh
 # convert some special characters to HTML
 sed -e 's/°/\&deg;/g
+ s/ -- / \&mdash; /g
  s/à/\&agrave;/g
  s/ä/\&auml;/g
  s/ö/\&ouml;/g
