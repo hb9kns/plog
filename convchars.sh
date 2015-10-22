@@ -11,5 +11,5 @@ sed -e 's/°/\&deg;/g
  s/Ü/\&Uuml;/g
  s/ß/\&szlig;/g
  s/§/\&sect;/g' | tr -c '
- -~' :
-# finish with translation of all remaining special chars (except newline) to :
+ -~	' :
+# finish with translation of all other special chars (except whitespace) to :
