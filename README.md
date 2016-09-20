@@ -5,7 +5,6 @@
 *included, which should be copied to .plog.rc during setup.*
 
 *ToDo: There is still missing a nice example of a working setup!*
-*It will be added soon, to help in understanding the system.*
 
 ## Overview
 
@@ -58,6 +57,12 @@ simple `mv`.
 
 The main scripts `pubnext.sh, mrkdwn.pl, allpub.sh, convchars.sh`
 should be installed in the same directory.
+
+There is an additional bonus script `poorkyll.sh` which uses
+`mrkdwn.pl` and `convchars.sh` to convert all `*.md` files in the
+current directory into `*.html` files. It can be given the name of a
+CSS style file which then will be referred to as style file.
+_This can be used as a simple static website generator._
 
 ### Customisation of scripts with `.plog.rc`
 
