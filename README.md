@@ -15,7 +15,7 @@ An example of the generated output can be found at my personal
 [blog]( http://yargo.andropov.org/blog/list.html ) and
 [glog]( gopher://sdf.org/1/users/yargo ) sites.
 
-This is describing version 2.1 of the suite.
+This is describing version 2.2 of the suite.
 
 ### Notes about the Gopher protocol
 
@@ -302,7 +302,7 @@ understand how `rsync` is working before doing so, though.
 
 ---
 
-_2015-Jan-16 YB_
+_2017-Nov-24 YB_
 
     # Copyright 2015 Yargo Bonetti
     #
