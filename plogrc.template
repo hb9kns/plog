@@ -54,10 +54,10 @@ logfile='_pubnext.log'
 convert0="$mydir/convchars.sh"
 # markdown to HTML converter
 convert1="$mydir/mrkdwn.pl"
-# HTML to text converter
-convert2='lynx -display_charset=US-ASCII -force-html -dump'
 # HTML tag marker for textual output
-convert3="$mydir/convtags.sh"
+convert2="$mydir/convtags.sh"
+# HTML to text converter
+convert3='lynx -display_charset=US-ASCII -force-html -dump -stdin'
 # e-mail transmission program
 mailer=mailx
 # mailer="logit ::" # test dummy
