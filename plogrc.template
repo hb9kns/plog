@@ -1,6 +1,6 @@
 ## Template file for plog configuration
 ## Please copy as .plog.rc and modify as needed!
-## Note: may use "$mydir" as defined by calling script!
+## Note: uses "$mydir" as defined by calling script!
 
 # list of e-mail addresses
 adds='ad.txt'
@@ -56,6 +56,8 @@ convert0="$mydir/convchars.sh"
 convert1="$mydir/mrkdwn.pl"
 # HTML to text converter
 convert2='lynx -display_charset=US-ASCII -force-html -dump'
+# HTML tag marker for textual output
+convert3="$mydir/convtags.sh"
 # e-mail transmission program
 mailer=mailx
 # mailer="logit ::" # test dummy

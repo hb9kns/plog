@@ -20,7 +20,7 @@
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
 myself=`basename "$0"`
-ver='2.1'
+ver='2.2'
 wdir="${1:-.}" # working directory, current if empty
 
 # go to dir of this script, get absolute path, and return to where we've been
@@ -45,6 +45,7 @@ logfile='_pubnext.log'
 convert0='cat' # special chars converter
 convert1="$mydir/mrkdwn.pl" # markdown to HTML converter
 convert2='lynx -display_charset=US-ASCII -force-html -dump' # HTML to text
+convert3='cat' # HTML tag converter
 mailer=mailx # mail program
 tmpf1='_pubnext.html'
 tmpf2='_pubnext.txt'
@@ -63,7 +64,7 @@ if test "$1" = ""
 then cat <<EOH >&2
 
     This is $myself, Version $ver
-    Copyright (C) 2015 Yargo Bonetti
+    Copyright (C) 2015,2018 Yargo Bonetti HB9KNS
     This program comes with ABSOLUTELY NO WARRANTY.
     This is free software, and you are welcome to redistribute it
     under certain conditions. See COPYING.txt for further information.
@@ -71,10 +72,11 @@ then cat <<EOH >&2
 usage: $myself <dir> [<prefix> <addressfile> <pubhtml> <pubtext>]
  will change to directory <dir>, and send first <text> with <prefix> to all
  addresses in <addressfile>,
- after Markdown conversion with $convert1
+ after special character conversion with $convert0,
+ Markdown conversion with $convert1,
  (adding html&body tags for standalone HTML file),
- and HTML-text conversion with $convert2,
- and special character conversion with $convert0,
+ HTML-text conversion with $convert2,
+ and HTML tag marking with $convert3,
  and copy the text to <pubhtml> as HTML and to <pubtext> as pure text
  (with .html/.txt suffixes, respectively, ignoring nonexistent directories),
  and do "git mv <text> $arch" afterwards (or just "mv", unless .git present)
@@ -158,8 +160,8 @@ do
   # get title from first <h1> header and remove all tags
   titl=`grep '<h1' $tmpf1 | head -n 1 | sed -e 's/<[^>]*>//g'`
   echo "$htmlfoot" >>$tmpf1 # finish with HTML footer
-  # now generate text from HTML version
-  $convert2 $tmpf1 >$tmpf2
+  # now generate text from HTML version, with possible marking of HTML tags
+  $convert2 $tmpf1 | $convert3 >$tmpf2
   logit sending to
   # remove comments and empty lines from address list, and send e-mails
   sed -e 's/[ 	]*[#;].*//;/^$/d' $adds | { while read adrow
