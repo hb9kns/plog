@@ -6,6 +6,9 @@ sed -e 's/°/\&deg;/g
  s/ä/\&auml;/g
  s/ö/\&ouml;/g
  s/ü/\&uuml;/g
+ s/�/&auml;/g
+ s/�/&ouml;/g
+ s/�/&uuml;/g
  s/Ä/\&Auml;/g
  s/Ö/\&Ouml;/g
  s/Ü/\&Uuml;/g
