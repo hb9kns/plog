@@ -1,5 +1,5 @@
 #!/bin/sh
-# (2015,2017 YCB)
+# (2015,2019 YCB)
 # change bindir according to your needs!
 bindir=${BINDIR:-$HOME/bin}
 if test "$1" = ""
@@ -24,7 +24,7 @@ EOU
  [iI]*) sfl="<style> `cat \"$1\"` </style>"
   echo ": including style in output"
   ;;
- *) echo ":: ignoring trailing argument $2" ;;
+ ?*) echo ":: ignoring trailing argument $2" ;;
  esac
 fi
 
