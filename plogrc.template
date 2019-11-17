@@ -38,8 +38,8 @@ subject='[newsletter]'
 # prefix for text file names
 fprefix='t'
 
-# mark for draft texts (must be at beginning of one line)
-draft='DRAFT'
+# mark for publication-ready texts (must be at beginning of one line)
+pubready=':publish'
 
 # archive directory for processed texts
 arch='Archiv'

@@ -15,7 +15,7 @@ An example of the generated output can be found at my personal
 [blog]( http://yargo.andropov.org/blog/list.html ) and
 [glog]( gopher://sdf.org/1/users/yargo ) sites.
 
-This is describing version 2.2 of the suite.
+This is describing version 3.0 of the suite.
 
 ### Notes about the Gopher protocol
 
@@ -29,7 +29,7 @@ Therefore, if the direct gopher link above does not work,
 you may try to access it
 [via proxy]( http://gopher.floodgap.com/gopher/gw.lite?sdf.org/1/users/yargo ).
 
-If you are using Seamonkey or Firefox, you may try the "OverbiteFF"
+If you are using Seamonkey or older versions of Firefox, you may try the "OverbiteFF"
 add-on for Gopher functionality. Overbite also is available for Android,
 via gopherproject.org or Floodgap.
 
@@ -125,8 +125,8 @@ by a detailed description of all used variables.
 	# prefix for text file names
 	fprefix='t'
 	
-	# mark for draft texts (must be at beginning of one line)
-	draft='DRAFT'
+	# mark for publication-ready texts (must be at beginning of one line)
+	pubready=':publish'
 	
 	# archive directory for processed texts
 	arch='Archiv'
@@ -177,8 +177,8 @@ by a detailed description of all used variables.
   whatever) -- but make sure it does not match other files
   in the working directory, like the archive directory,
   address files, or log and temporary files!
-- `draft` contains the string that should mark draft texts
-  which are not (yet) to be published; it is used as a
+- `pubready` contains the string that should mark texts
+  ready for publication; it is used as a
   `grep` pattern, so be careful with punctuation
 - `arch` denotes a directory (must be writable of course)
   where postings (input text/Markdown files) are moved,
@@ -245,8 +245,8 @@ Set this prefix as a pattern in the configuration variable `tprefix`.
 (The file suffix is irrelevant: They will all be treated as text files.)
 
 `pubnext.sh` will generate the list of all files matching the prefix
-pattern, and then process the first file in that list which does
-*not* bear the "draft pattern" as defined by its `draft` variable. If
+pattern, and then process the first file in that list which does bear
+the "publication-ready pattern" as defined by its `pubready` variable. If
 you want to have your files processed in a certain order, you should
 therefore name them in such a way that the lexical order of their names
 corresponds to the desired processing order. An example would be naming
@@ -283,6 +283,14 @@ publication).
 any available post, and then generate index files in HTML and pure text
 version for publication as blog and glog.
 
+It is possible to run `allpub.sh` automatically and remotely, if its directory
+is under git version control. For this, you must run `installhook.sh` once on
+the publishing server; it installs a git "post-update" hook which is run
+whenever you push the git repo's content from a remote system. The hook in
+turn changes to the repo's working directory and runs `allpub.sh` in there.
+(This of course won't work in the situation described below, where publication
+and script execution should run as different users.)
+
 #### Publication (blog/glog)
 
 As it might not be desirable to publish the generated HTML and pure text
@@ -302,9 +310,9 @@ understand how `rsync` is working before doing so, though.
 
 ---
 
-_2017-Nov-24 YB_
+*2019-Nov-17 / YB*
 
-    # Copyright 2015 Yargo Bonetti
+    # Copyright 2015,2019 Yargo Bonetti
     #
     # This file is part of plog.
     # 
