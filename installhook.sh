@@ -18,6 +18,23 @@
 # You should have received a copy of the GNU General Public License
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
+if test $# -lt 1
+then cat <<EOH
+usage: $0 <repodir>
+ will install a git post-update hook into a git <repodir> pointing to
+ allpub.sh in the directory of $0
+EOH
+ exit 0
+fi
+
+echo :: sorry but this is still broken ::
+exit 99
+# ################
+# BROKEN -- W.I.P!
+# - script must run in a working directory somewhere, so we need to know where to checkout!
+# - all the plog scripts must be in that working directory as well, or the logic needs to be modified to allow for a central script directory!
+# ################
+
 githook=hooks/post-update
 myself=`basename "$0"`
 ver='3.0'
@@ -29,16 +46,15 @@ cd "$mydir"
 mydir=`pwd -P`
 cd - >/dev/null
 
-ggr=$mydir/.git
-if test ! -d $ggr
-then echo "$ggr does not exist, aborting!"
+if test ! -d "$wdir"
+then echo "$wdir does not exist, aborting!"
  echo "(i.e, $mydir is not a git working directory)"
  exit 1
-else echo "installing $ggr/$githook ..."
+else echo "installing $wdir/$githook ..."
 fi
 # hook script in bare repo: pull updated content into working directory
 # and execute allpub.sh here
- cat <<EOH >$ggr/$githook
+ cat <<EOH > "$wdir/$githook"
 #!/bin/sh
 # hook installed by $0
 echo post-update:
