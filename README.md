@@ -1,11 +1,5 @@
 # plog
 
-*Please note: there is now one common configuration file .plog.rc.*
-*It is not part of the suite, but a template file progrc.template is*
-*included, which should be copied to .plog.rc during setup.*
-
-*ToDo: There is still missing a nice example of a working setup!*
-
 ## Overview
 
 Plog is a suite of some scripts to be run on a UNIX server for handling
@@ -291,7 +285,17 @@ turn changes to the repo's working directory and runs `allpub.sh` in there.
 (This of course won't work in the situation described below, where publication
 and script execution should run as different users.)
 
+Example:
+If you had the working directory on the server at `/some/where/` and
+the (bare) git repo (which you use to push to from a remote location)
+at `/home/yourself/bare.git` then you could issue the command
+`./installhook.sh /home/yourself/bare.git /some/where/.git/` on the
+server to have this set up. Please note: the script expects a directory
+`./hooks/` to be in `/some/where/.git/` and will also verify this.
+
 #### Publication (blog/glog)
+
+*(This section may be ignored, if publication happens via git hooks.)*
 
 As it might not be desirable to publish the generated HTML and pure text
 files (together with their respective index files) as the same user who

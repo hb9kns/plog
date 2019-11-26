@@ -18,27 +18,23 @@
 # You should have received a copy of the GNU General Public License
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
-if test $# -lt 1
+ver='3.0'
+if test $# -ne 2
 then cat <<EOH
-usage: $0 <repodir>
- will install a git post-update hook into a git <repodir> pointing to
- allpub.sh in the directory of $0
+usage: $0 <repo> <working>	(ver.$ver / 2019-11-26 / HB9KNS)
+ will install into a (bare) git <repo> a git post-update hook pointing to
+ allpub.sh (and companion scripts) in the directory of $0,
+ while the <working> directory is where contents of <repo> will be pulled
+ to when updating the latter
+ (absolute paths for <repo> and <working> might be safest)
 EOH
  exit 0
 fi
 
-echo :: sorry but this is still broken ::
-exit 99
-# ################
-# BROKEN -- W.I.P!
-# - script must run in a working directory somewhere, so we need to know where to checkout!
-# - all the plog scripts must be in that working directory as well, or the logic needs to be modified to allow for a central script directory!
-# ################
-
 githook=hooks/post-update
 myself=`basename "$0"`
-ver='3.0'
-wdir="${1:-.}" # working directory, current if empty
+repo="$1"
+wrkg="$2"
 
 # go to dir of this script, get absolute path, and return to where we've been
 mydir=`dirname "$0"`
@@ -46,18 +42,34 @@ cd "$mydir"
 mydir=`pwd -P`
 cd - >/dev/null
 
-if test ! -d "$wdir"
-then echo "$wdir does not exist, aborting!"
- echo "(i.e, $mydir is not a git working directory)"
- exit 1
-else echo "installing $wdir/$githook ..."
-fi
+cat <<EOT
+: scriptdir	$mydir
+: repo dir	$repo
+: working dir	$wrkg
+: installing git-hook ...
+EOT
+
+# check whether repo and wrkg directories exist
+if test -d "$repo" -a -d "$wrkg"
+# check whether subdirectory for hooks exists
+then if test ! -d "$repo/${githook%/*}"
+then
+  echo "missing $repo/${githook%/*} directory, aborting!"
+  exit 2
+else
 # hook script in bare repo: pull updated content into working directory
 # and execute allpub.sh here
- cat <<EOH > "$wdir/$githook"
+ cat <<EOH > "$repo/$githook"
 #!/bin/sh
 # hook installed by $0
 echo post-update:
 unset GIT_DIR
-cd "$mydir" && git pull origin master && git checkout . && sh "$mydir/allpub.sh"
+cd "$wrkg" && git pull origin master && git checkout . && sh "$mydir/allpub.sh"
 EOH
+ chmod a+rx "$repo/$githook"
+ echo ": done!"
+fi
+else
+ echo "arguments aren't existing directories, aborting!"
+ exit 1
+fi
