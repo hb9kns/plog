@@ -1,7 +1,7 @@
 #!/bin/sh
 # script to install a post-update githook running allpub.sh
 #
-# Copyright 2019 Yargo Bonetti
+# Copyright 2019 Yargo Bonetti / HB9KNS
 #
 # This file is part of plog.
 # 
@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
-ver='3.0'
+ver='3.1'
 if test $# -ne 2
 then cat <<EOH
 usage: $0 <repo> <working>	(ver.$ver / 2019-11-26 / HB9KNS)
@@ -64,6 +64,9 @@ else
 # hook installed by $0
 echo post-update:
 unset GIT_DIR
+if test ! -d "$wrkg"
+then git clone "$repo" "$wrkg"
+fi
 cd "$wrkg" && git pull origin master && git checkout . && sh "$mydir/allpub.sh"
 EOH
  chmod a+rx "$repo/$githook"

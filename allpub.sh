@@ -1,7 +1,7 @@
 #!/bin/sh
 # script to process all files in current directory with pubnext.sh
 #
-# Copyright 2015 Yargo Bonetti
+# Copyright 2015,2019 Yargo Bonetti / HB9KNS
 #
 # This file is part of plog.
 # 
@@ -19,7 +19,7 @@
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
 myself=`basename "$0"`
-ver='2.2'
+ver='3.1'
 wdir="${1:-.}" # working directory, current if empty
 
 # go to dir of this script, get absolute path, and return to where we've been
@@ -67,7 +67,7 @@ then . "$cfgf"
 fi
 
 # process all possible files in the working directory
-while sh $mydir/pubnext.sh "$wdir" $fprefix $adds $pubhtml $pubtext
+while sh $mydir/pubnext.sh "$wdir" $fprefix $adds "$pubhtml" "$pubtext"
 do : # colon is a shell NO-OP
 done
 

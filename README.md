@@ -9,7 +9,7 @@ An example of the generated output can be found at my personal
 [blog]( http://yargo.andropov.org/blog/list.html ) and
 [glog]( gopher://sdf.org/1/users/yargo ) sites.
 
-This is describing version 3.0 of the suite.
+This is describing version 3.1 of the suite.
 
 ### Notes about the Gopher protocol
 
@@ -314,9 +314,9 @@ understand how `rsync` is working before doing so, though.
 
 ---
 
-*2019-Nov-17 / YB*
+*2019-Nov-26 / HB9KNS*
 
-    # Copyright 2015,2019 Yargo Bonetti
+    # Copyright 2015,2019 Yargo Bonetti / HB9KNS
     #
     # This file is part of plog.
     # 
