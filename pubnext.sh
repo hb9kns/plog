@@ -156,8 +156,9 @@ do
  then # if publication-ready flag found in text
   logit processing $fn
   echo "$htmlhead" >$tmpf1 # start with HTML file header
-  # remove flags, convert special characters, and markdown to html
-  grep -v "^$pubready" "$fn" | $convert0 | $convert1 >>$tmpf1
+  # remove up to flag, convert special characters, and markdown to html
+  # (prepend empty line to correct sed in case of flag on first line)
+  { echo ; cat "$fn" ; } | sed "1,/^$pubready/d" | $convert0 | $convert1 >>$tmpf1
   # get title from first <h1> header and remove all tags
   titl=`grep '<h1' $tmpf1 | head -n 1 | sed -e 's/<[^>]*>//g'`
   echo "$htmlfoot" >>$tmpf1 # finish with HTML footer
@@ -190,7 +191,7 @@ do
   # (at this point, we don't need $tmpf1 any more, therefore recycle)
   echo $fn >$tmpf1
   break
- else logit ignoring draft $fn
+ else logit ignoring draft $fn as no $pubready line found
  fi
 done
 }

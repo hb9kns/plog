@@ -126,6 +126,7 @@ by a detailed description of all used variables.
 	fprefix='t'
 	
 	# mark for publication-ready texts (must be at beginning of one line)
+	# all up to and including this line will be removed before publication!
 	pubready=':publish'
 	
 	# archive directory for processed texts
@@ -190,7 +191,9 @@ by a detailed description of all used variables.
   address files, or log and temporary files!
 - `pubready` contains the string that should mark texts
   ready for publication; it is used as a
-  `grep` pattern, so be careful with punctuation
+  `grep` and `sed` pattern, so be careful with punctuation;
+  *no lines up to and including this string will be published*
+  i.e you may put private notes before this string
 - `arch` denotes a directory (must be writable of course)
   where postings (input text/Markdown files) are moved,
   after being processed and published
@@ -262,8 +265,10 @@ Set this prefix as a pattern in the configuration variable `tprefix`.
 
 `pubnext.sh` will generate the list of all files matching the prefix
 pattern, and then process the first file in that list which does bear
-the "publication-ready pattern" as defined by its `pubready` variable. If
-you want to have your files processed in a certain order, you should
+the "publication-ready pattern" as defined by the `pubready` variable.
+All lines up to and including this pattern will be ignored, i.e remain
+unpublished; you can use this to keep private notes before this pattern.
+If you want to have your files processed in a certain order, you should
 therefore name them in such a way that the lexical order of their names
 corresponds to the desired processing order. An example would be naming
 them as `pYYMMDDI`, where `YYMMDD` is indicating year, month, and day of

@@ -44,6 +44,7 @@ subject='[newsletter]'
 fprefix='t'
 
 # mark for publication-ready texts (must be at beginning of one line)
+# all up to and including this line will be removed before publication!
 pubready=':publish'
 
 # archive directory for processed texts
