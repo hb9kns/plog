@@ -1,6 +1,11 @@
 ## Template file for plog configuration
 ## Please copy as .plog.rc and modify as needed!
-## Note: uses "$mydir" as defined by calling script!
+## Note: uses "$wdir" and "$mydir" as defined by calling script!
+
+# set to additional existing file,
+# if you want to include additional local config
+# which will be processed at the end
+localrc="$wdir/.plog.rc.local"
 
 # list of e-mail addresses
 adds='ad.txt'
@@ -69,3 +74,7 @@ tmpf2='_pubnext.txt'
 
 # lockfile
 lockf='.pubnext.lock'
+
+if test -r "$localrc"
+then . "$localrc"
+fi

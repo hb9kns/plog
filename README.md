@@ -82,6 +82,12 @@ by a detailed description of all used variables.
 
 	## Template file for plog configuration
 	## Please copy as .plog.rc and modify as needed!
+	## Note: uses "$wdir" and "$mydir" as defined by calling script!
+	
+	# set to additional existing file,
+	# if you want to include additional local config
+	# which will be processed at the end
+	localrc="$wdir/.plog.rc.local"
 	
 	# list of e-mail addresses
 	adds='ad.txt'
@@ -130,12 +136,15 @@ by a detailed description of all used variables.
 	
 	logfile='_pubnext.log'
 	
-	# special character converter
-	convert0='cat'
+	# special chars to HTML converter
+	# set to 'cat' if unused
+	convert0="$mydir/convchars.sh"
 	# markdown to HTML converter
-	convert1='mrkdwn.pl'
+	convert1="$mydir/mrkdwn.pl"
+	# HTML tag marker for textual output
+	convert2="$mydir/convtags.sh"
 	# HTML to text converter
-	convert2='lynx -display_charset=US-ASCII -force-html -dump'
+	convert3='lynx -display_charset=US-ASCII -force-html -dump -stdin'
 	# e-mail transmission program
 	mailer=mailx
 	# mailer="logit ::" # test dummy
@@ -147,7 +156,15 @@ by a detailed description of all used variables.
 	
 	# lockfile
 	lockf='.pubnext.lock'
+	
+	if test -r "$localrc"
+	then . "$localrc"
+	fi
 
+- `localrc` points to a config file, which will be read at the end, allowing
+  to override settings (see below under "Git hook" for explanation) -- if not
+  needed, set to a non-existent or empty file, e.g `/dev/null` , or completely
+  remove it together with the final `if-then-fi` block
 - `adds` is a string with the name of the address file of the e-mail recipients
 - `pubtext` is a directory, where pure text versions and (by `allpub.sh`)
   an index file suitable for a gopher server will be saved; if empty, no
@@ -183,7 +200,9 @@ by a detailed description of all used variables.
 - `logfile` is the file logging all activity by `pubnext.sh`
 - `convert0` is the script for UTF8-HTML character conversion
 - `convert1` is the script for Markdown-HTML conversion
-- `convert2` is the script for HTML-text conversion
+- `convert2` is the script for marking HTML tags for textual output
+  (like surrounding `<em>` with explicit `*` characters)
+- `convert3` is the script for HTML-text conversion
 - `mailer` is the program for transmitting e-mail
 - `tmpf1` and `tmpf2` are temporary files
 - `lockf` is the lockfile used to control execution of `pubnext.sh`
@@ -194,17 +213,20 @@ by a detailed description of all used variables.
   `pubnext.sh` on the command line, overriding the settings in the script
   or the configuration file `.plog.rc`
 - `.plog.rc` is local to any *working* directory, so you have to add it
-  to any directory containing posts (source texts)
+  to any directory containing posts (source texts), where you want to run
+  `pubnext.sh`
 - `.plog.rc` is read as a *shell script,* therefore you have to honour
   shell script syntax; be especially careful about closing all strings
   opened with `'` and to escape `"` with `\` inside `"..."` strings!
 - a single argument can be given to `allpub.sh`, indicating the working
   directory where the source (Markdown formatted) files are stored; it will
   be passed on to `pubnext.sh`, and if empty, the current directory is used
+- if working with "Git hook" technique (see below), only one
+  (in general the top-most) working directory can be used
 - all directories are *relative to the working directory*
   given as first (and mandatory) argument to the scripts
 - to have only plaintext functionality without Markdown and HTML conversion,
-  set `convert1` and `convert2` both to `cat`
+  set all `convertN` to `cat`
 
 ### Usage considerations
 
@@ -277,6 +299,8 @@ publication).
 any available post, and then generate index files in HTML and pure text
 version for publication as blog and glog.
 
+##### Git hook for script execution
+
 It is possible to run `allpub.sh` automatically and remotely, if its directory
 is under git version control. For this, you must run `installhook.sh` once on
 the publishing server; it installs a git "post-update" hook which is run
@@ -292,6 +316,14 @@ at `/home/yourself/bare.git` then you could issue the command
 `./installhook.sh /home/yourself/bare.git /some/where/.git/` on the
 server to have this set up. Please note: the script expects a directory
 `./hooks/` to be in `/some/where/.git/` and will also verify this.
+
+If you want to mirror a repo somewhere else, you might have the
+config file `.plog.rc` tracked by git, but at the same time require
+different settings on the mirror host. To solve this, you may use
+a `localrc` variable as demonstrated in the sample config file
+`plogrc.template` : this variable can point to a local config which
+is processed *after* the standard `.plog.rc` file, and therefore
+can override the latter.
 
 #### Publication (blog/glog)
 
@@ -314,7 +346,7 @@ understand how `rsync` is working before doing so, though.
 
 ---
 
-*2019-Nov-26 / HB9KNS*
+*2019-Dec-09 / HB9KNS*
 
     # Copyright 2015,2019 Yargo Bonetti / HB9KNS
     #
