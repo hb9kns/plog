@@ -349,9 +349,53 @@ If you want to make use of `allsync.sh`, please set its variables
 according to your working and publication directories! You should
 understand how `rsync` is working before doing so, though.
 
+### Example with Git hook setup for testing
+
+To test the system locally, you can do as follows; we assume `$src`
+is the directory containing the source code (plog installation).
+
+1. choose a directory `$loc` for testing; `/tmp` is fine for this
+2. `cd $loc`
+3. create a bare directory (the "repo"): `git init --bare repo.git`
+4. create the working directory: `git init workdir`
+5. create target directories: `mkdir text html`
+5. copy the config template: `cp $loc/plogrc.template workdir/.plog.rc`
+6. edit the template: `cd workdir ; $EDITOR .plog.rc`
+  at least setting `pubtext=/tmp/text` and `pubhtml=/tmp/html`
+  (replace `/tmp` by whatever you've chosen for `$loc`)
+7. add the config to the repo (safer, but not required): `git add .plog.rc`
+8. do an initial commit: `git commit -m initial`
+9. set the "remote" repo: `git remote add origin ../repo.git` (or whatever)
+10. push to the repo: `git push -u origin master`
+11. initialize the hook: `$src/installhook.sh $loc/repo.git $loc/workdir`
+12. add some text: `$EDITOR test.txt; git add test.txt; git commit -m 'first post'`
+  while making sure the name of the text file begins with the `prefix`
+  set in the config file, which by default is `t`
+13. if you want to "publish" the text, make sure to add a line
+  `:publish` (or whatever has been chosen for the `pubready` config variable)
+  at the beginning of the text -- remember *everything before* that line
+  will be ignored for publication
+14. to see what has been published, do `git pull` in the working directory
+  after pushing/publishing, as this will pull down the logfiles; the remote
+  will also report while pushing
+15. repeat from step 12 for more text
+
+Please note that the steps 1 to 10 are a common workflow for setting up
+a local git repo with a working directory on the same machine.
+When working with a (true) remote server, only the `workdir` would
+be on a local machine, but all the other files and directories would
+have to be installed on the server, and the remote in step 9
+(on the local machine) set accordingly;
+for this to work, obviously you need shell access on the server.
+
+Remember to set `.plog.rc.local` on different remote servers, if
+you do mirroring of the same content, as the config most probably
+will have to be different, and this way you can still keep the
+`.plog.rc` for the main publication server in the repo.
+
 ---
 
-*2019-Dec-09 / HB9KNS*
+*2019-Dec-10 / HB9KNS*
 
     # Copyright 2015,2019 Yargo Bonetti / HB9KNS
     #
