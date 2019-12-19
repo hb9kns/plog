@@ -285,9 +285,14 @@ This file should be a simple text file with one recipient address per
 line. Lines beginning with `#` are ignored and can be used for comments.
 However, never use `#` after an address: it would be part of the latter!
 
-If you do not need the newsletter functionality, you *still have to have
+If you do not need the newsletter functionality, you still *should have
 an address file!* It can be empty (or only contain comment lines),
-but it *must be present and readable.*
+but it *should be present and readable.*
+If the file is missing, some scripts may issue error messages.
+
+*Remember: you need a working command line mailer for this.*
+Please set the `mailer` configuration variable accordingly,
+but not all systems providing shell access may allow you to use it.
 
 #### Script execution
 
@@ -395,7 +400,7 @@ will have to be different, and this way you can still keep the
 
 ---
 
-*2019-Dec-10 / HB9KNS*
+*2019-Dec-19 / HB9KNS*
 
     # Copyright 2015,2019 Yargo Bonetti / HB9KNS
     #
