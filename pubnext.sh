@@ -20,7 +20,7 @@
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
 myself=`basename "$0"`
-ver='3.0'
+ver='3.1'
 wdir="${1:-.}" # working directory, current if empty
 
 # go to dir of this script, get absolute path, and return to where we've been
@@ -124,11 +124,13 @@ then abort 6 "lockfile $lockf exists"
 fi
 
 now=`date -u`
+host=`hostname`
+host=${host:-(undefined)}
 echo "lockfile for $myself with PID $$" >$lockf
 echo "at $now" >>$lockf
 echo >$tmpf1 # create empty file
 
-logit starting at $now in `pwd -P`
+logit starting at $now in `pwd -P` on $host
 
 fprefix=${2:-$fprefix}
 logit looking for files with prefix $fprefix
