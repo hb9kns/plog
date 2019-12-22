@@ -20,7 +20,7 @@
 # along with plog.  If not, see <http://www.gnu.org/licenses/>.
 #
 myself=`basename "$0"`
-ver='3.1'
+ver='3.2'
 wdir="${1:-.}" # working directory, current if empty
 
 # go to dir of this script, get absolute path, and return to where we've been
@@ -211,8 +211,6 @@ else
  # try moving processed file with git into archive
  if git mv "$donefile" $arch >/dev/null 2>&1
  then logit git mv done
-  # add modified logfile to commit
-  git add $logfile
   # commit and push archived text file
   git commit -m ": $myself processing $wdir/$donefile" >/dev/null 2>&1 && logit git commit done
   sleep 3 # wait a bit, to let file system finish its work after git

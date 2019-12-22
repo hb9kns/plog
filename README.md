@@ -9,7 +9,7 @@ An example of the generated output can be found at my personal
 [blog]( http://yargo.andropov.org/blog/list.html ) and
 [glog]( gopher://sdf.org/1/users/yargo ) sites.
 
-This is describing version 3.1 of the suite.
+This is describing version 3.2 of the suite.
 
 ### Notes about the Gopher protocol
 
@@ -381,8 +381,8 @@ is the directory containing the source code (plog installation).
   at the beginning of the text -- remember *everything before* that line
   will be ignored for publication
 14. to see what has been published, do `git pull` in the working directory
-  after pushing/publishing, as this will pull down the logfiles; the remote
-  will also report while pushing
+  after pushing/publishing, as this will show the published files in the archive;
+  the remote will also report while pushing
 15. repeat from step 12 for more text
 
 Please note that the steps 1 to 10 are a common workflow for setting up
@@ -400,7 +400,7 @@ will have to be different, and this way you can still keep the
 
 ---
 
-*2019-Dec-19 / HB9KNS*
+*2019-Dec-21 / HB9KNS*
 
     # Copyright 2015,2019 Yargo Bonetti / HB9KNS
     #
