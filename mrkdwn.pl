@@ -5,6 +5,7 @@
 # <http://daringfireball.net/projects/markdown/>
 #
 # Modified 2014, Y.Bonetti: removed plugins (CLI-only version)
+# Modified 2020, Y.Bonetti/HB9KNS: added image floating
 
 package Markdown;
 require 5.006_000;
@@ -516,12 +517,17 @@ sub _DoImages {
 		my $whole_match = $1;
 		my $alt_text    = $2;
 		my $link_id     = lc $3;
+		my $floating    = $alt_text;
 
 		if ($link_id eq "") {
 			$link_id = lc $alt_text;     # for shortcut links like ![this][].
 		}
 
 		$alt_text =~ s/"/&quot;/g;
+		if ( $floating =~ s/^(:[<>]).*/$1/ ) {
+			$alt_text =~ s/^:.//;
+			$floating = " style=\"float:".($floating eq ":<" ? "left":"right")."\"";
+		} else { $floating = ""; }
 		if (defined $g_urls{$link_id}) {
 			my $url = $g_urls{$link_id};
 			$url =~ s! \* !$g_escape_table{'*'}!gx;		# We've got to encode these to avoid
@@ -533,6 +539,7 @@ sub _DoImages {
 				$title =~ s!  _ !$g_escape_table{'_'}!gx;
 				$result .=  " title=\"$title\"";
 			}
+			$result .= $floating unless $floating eq "";
 			$result .= $g_empty_element_suffix;
 		}
 		else {
@@ -568,6 +575,7 @@ sub _DoImages {
 		my $result;
 		my $whole_match = $1;
 		my $alt_text    = $2;
+		my $floating    = $alt_text;
 		my $url	  		= $3;
 		my $title		= '';
 		if (defined($6)) {
@@ -575,6 +583,10 @@ sub _DoImages {
 		}
 
 		$alt_text =~ s/"/&quot;/g;
+		if ( $floating =~ s/^(:[<>]).*/$1/ ) {
+			$alt_text =~ s/^:.//;
+			$floating = " style=\"float:".($floating eq ":<" ? "left":"right")."\"";
+		} else { $floating = ""; }
 		$title    =~ s/"/&quot;/g;
 		$url =~ s! \* !$g_escape_table{'*'}!gx;		# We've got to encode these to avoid
 		$url =~ s!  _ !$g_escape_table{'_'}!gx;		# conflicting with italics/bold.
@@ -584,6 +596,7 @@ sub _DoImages {
 			$title =~ s!  _ !$g_escape_table{'_'}!gx;
 			$result .=  " title=\"$title\"";
 		}
+		$result .= $floating unless $floating eq "";
 		$result .= $g_empty_element_suffix;
 
 		$result;
