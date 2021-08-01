@@ -6,6 +6,7 @@
 #
 # Modified 2014, Y.Bonetti: removed plugins (CLI-only version)
 # Modified 2020, Y.Bonetti/HB9KNS: added image floating
+# Modified 2021, Y.Bonetti/HB9KNS: removed <div> from hashable tags
 
 package Markdown;
 require 5.006_000;
@@ -199,8 +200,9 @@ sub _HashHTMLBlocks {
 	# "paragraphs" that are wrapped in non-block-level tags, such as anchors,
 	# phrase emphasis, and spans. The list of tags we're looking for is
 	# hard-coded:
-	my $block_tags_a = qr/p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del/;
-	my $block_tags_b = qr/p|div|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math/;
+	# (removed 'div', as it interferes with CSS-based tricks // 2021-8 / HB9KNS)
+	my $block_tags_a = qr/p|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math|ins|del/;
+	my $block_tags_b = qr/p|h[1-6]|blockquote|pre|table|dl|ol|ul|script|noscript|form|fieldset|iframe|math/;
 
 	# First, look for nested blocks, e.g.:
 	# 	<div>
