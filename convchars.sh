@@ -6,6 +6,13 @@ sed -e 's/°/\&deg;/g
  s/^------* *$/<div style="page-break-before:always"> <\/div>\
 -----/
  s/à/\&agrave;/g
+ s/â/\&acirc;/g
+ s/ç/\&ccedil;/g
+ s/é/\&eacute;/g
+ s/è/\&egrave;/g
+ s/ê/\&ecirc;/g
+ s/ô/\&ocirc;/g
+ s/û/\&ucirc;/g
  s/ä/\&auml;/g
  s/ö/\&ouml;/g
  s/ü/\&uuml;/g
